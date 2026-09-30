@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://osb.training/customer"
+            targetNamespace="http://osb.training/customer" elementFormDefault="qualified">
+  <xsd:simpleType name="NonEmptyString">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value=".*\S.*"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="EmailType">
+    <xsd:restriction base="xsd:string">
+        <xsd:pattern value="[^@]+@[^@]+\.[^@]+"/>
+    </xsd:restriction>
+</xsd:simpleType>
+</xsd:schema>

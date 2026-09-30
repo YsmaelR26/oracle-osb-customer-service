@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://osb.training/customer"
+            xmlns:tns="http://osb.training/customer" targetNamespace="http://osb.training/customer"
+            elementFormDefault="qualified">
+  <xsd:simpleType name="StatusType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="SUCCESS"/>
+      <xsd:enumeration value="ERROR"/>
+      <xsd:enumeration value="WARNING"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="ResponseStatusType">
+    <xsd:sequence>
+      <xsd:element name="Status" type="tns:StatusType"/>
+      <xsd:element name="Message" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

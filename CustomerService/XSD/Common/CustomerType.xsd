@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://osb.training/customer" xmlns:tns="http://osb.training/customer"
+            targetNamespace="http://osb.training/customer" elementFormDefault="qualified">
+  <xsd:include schemaLocation="NonEmptyString.xsd"/>
+  <xsd:complexType name="CustomerType">
+    <xsd:sequence>
+      <xsd:element name="FirstName" type="tns:NonEmptyString"/>
+      <xsd:element name="LastName" type="tns:NonEmptyString"/>
+      <xsd:element name="Email" type="tns:EmailType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

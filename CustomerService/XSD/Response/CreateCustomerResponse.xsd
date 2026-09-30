@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://osb.training/customer"
+            xmlns:tns="http://osb.training/customer" targetNamespace="http://osb.training/customer"
+            elementFormDefault="qualified">
+  <xsd:include schemaLocation="../Common/CustomerResponseType.xsd"/>
+  <xsd:element name="CreateCustomerResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="CustomerId" type="xsd:long"/>
+        <xsd:element name="ResponseStatus" type="tns:ResponseStatusType"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

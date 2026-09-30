@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="CustomerService/WSDL/CustomerService"/>
+            <con:binding>
+                <con:name>CustomerServiceBinding</con:name>
+                <con:namespace>http://osb.training/customer</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router errorHandler="error-N3f57fedb.786183da.0.1a0d47ef9e3.N8000">
+        <con:pipeline type="error" name="error-N3f57fedb.786183da.0.1a0d47ef9e3.N8000">
+            <con:stage id="_StageId-N3f57fedb.786183da.0.1a0d47ef9e3.N7fff" name="CustomerServiceError">
+                <con:context/>
+                <con:actions>
+                    <con1:ifThenElse xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedd.N435fd53d.0.1a0f2466e99.N7ff4</con2:id>
+                        <con1:case id="_BranchId-N3f57fedd.N435fd53d.0.1a0f2466e99.N7ff3">
+                            <con1:condition>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$operation = "CreateCustomer"</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:ifThenElse>
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedb.786183da.0.1a0d47ef9e3.N7fe6</con2:id>
+                                    <con1:case id="_BranchId-N3f57fedb.786183da.0.1a0d47ef9e3.N7fe5">
+                                        <con1:condition>
+                                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$fault/ctx:errorCode = "OSB-382505"</con2:xqueryText>
+                                        </con1:condition>
+                                        <con1:actions>
+                                            <con1:replace contents-only="true" varName="body">
+                                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedb.786183da.0.1a0d47ef9e3.N7fe2</con2:id>
+                                                <con1:expr>
+                                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soapenv:Fault xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:cus="http://osb.training/customer">
+    <faultcode>soapenv:Client</faultcode>
+    <faultstring>Invalid customer request</faultstring>
+    <detail>
+        <cus:CreateCustomerError>
+            <cus:Code>VALIDATION_ERROR</cus:Code>
+            <cus:Message>
+                The request contains missing, empty, or invalid customer data
+            </cus:Message>
+        </cus:CreateCustomerError>
+    </detail>
+</soapenv:Fault>]]></con2:xqueryText>
+                                                </con1:expr>
+                                            </con1:replace>
+                                            <con2:reply isError="true" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                                <con2:id>_ActionId-N3f57fedb.786183da.0.1a0d47ef9e3.N7fdf</con2:id>
+                                            </con2:reply>
+                                        </con1:actions>
+                                    </con1:case>
+                                    <con1:case id="_BranchId-N3f57fedb.786183da.0.1a0d47ef9e3.N7fdd">
+                                        <con1:condition>
+                                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">contains($fault/ctx:reason, "ORA-00001")</con2:xqueryText>
+                                        </con1:condition>
+                                        <con1:actions>
+                                            <con1:replace contents-only="true" varName="body">
+                                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedb.786183da.0.1a0d47ef9e3.N7fd9</con2:id>
+                                                <con1:expr>
+                                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soapenv:Fault xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:cus="http://osb.training/customer">
+    <faultcode>soapenv:Client</faultcode>
+    <faultstring>Customer already exists</faultstring>
+    <detail>
+        <cus:CreateCustomerError>
+            <cus:Code>EMAIL_ALREADY_EXISTS</cus:Code>
+            <cus:Message>
+                A customer with this email already exists
+            </cus:Message>
+        </cus:CreateCustomerError>
+    </detail>
+</soapenv:Fault>]]></con2:xqueryText>
+                                                </con1:expr>
+                                            </con1:replace>
+                                            <con2:reply isError="true" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                                <con2:id>_ActionId-N3f57fedb.786183da.0.1a0d47ef9e3.N7fd6</con2:id>
+                                            </con2:reply>
+                                        </con1:actions>
+                                    </con1:case>
+                                    <con1:default>
+                                        <con1:replace contents-only="true" varName="body">
+                                            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedb.786183da.0.1a0d47ef9e3.N7ff9</con2:id>
+                                            <con1:expr>
+                                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soapenv:Fault xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:cus="http://osb.training/customer">
+    <faultcode>soapenv:Server</faultcode>
+    <faultstring>Customer service request failed</faultstring>
+    <detail>
+        <cus:CreateCustomerError>
+            <cus:Code>{fn:data($fault/ctx:errorCode)}</cus:Code>
+            <cus:Message>An error occurred while processing the customer request</cus:Message>
+        </cus:CreateCustomerError>
+    </detail>
+</soapenv:Fault>]]></con2:xqueryText>
+                                            </con1:expr>
+                                        </con1:replace>
+                                        <con2:reply isError="true" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                            <con2:id>_ActionId-N3f57fedb.786183da.0.1a0d47ef9e3.N7ffc</con2:id>
+                                        </con2:reply>
+                                    </con1:default>
+                                </con1:ifThenElse>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:case id="_BranchId-N3f57fedd.N435fd53d.0.1a0f2466e99.N7fe8">
+                            <con1:condition>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$operation = "GetCustomer"</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:ifThenElse>
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedd.N435fd53d.0.1a0f2466e99.N7fe1</con2:id>
+                                    <con1:case id="_BranchId-N3f57fedd.N435fd53d.0.1a0f2466e99.N7fd8">
+                                        <con1:condition>
+                                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$fault/ctx:errorCode = "OSB-382505"</con2:xqueryText>
+                                        </con1:condition>
+                                        <con1:actions>
+                                            <con1:replace contents-only="true" varName="body">
+                                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedd.N435fd53d.0.1a0f2466e99.N7fd2</con2:id>
+                                                <con1:expr>
+                                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soapenv:Fault
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:cus="http://osb.training/customer">
+
+    <faultcode>soapenv:Client</faultcode>
+    <faultstring>Invalid customer request</faultstring>
+
+    <detail>
+        <cus:GetCustomerError>
+            <cus:Code>VALIDATION_ERROR</cus:Code>
+            <cus:Message>
+                CustomerId is required and must be a valid positive integer
+            </cus:Message>
+        </cus:GetCustomerError>
+    </detail>
+
+</soapenv:Fault>]]></con2:xqueryText>
+                                                </con1:expr>
+                                            </con1:replace>
+                                            <con2:reply isError="true" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                                <con2:id>_ActionId-N3f57fedd.N435fd53d.0.1a0f2466e99.N7fcf</con2:id>
+                                            </con2:reply>
+                                        </con1:actions>
+                                    </con1:case>
+                                    <con1:case id="_BranchId-N3f57fedd.N435fd53d.0.1a0f2466e99.N7fe0">
+                                        <con1:condition>
+                                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">contains($fault/ctx:reason, "ORA-01403")</con2:xqueryText>
+                                        </con1:condition>
+                                        <con1:actions>
+                                            <con1:replace contents-only="true" varName="body">
+                                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedd.N435fd53d.0.1a0f2466e99.N7fdd</con2:id>
+                                                <con1:expr>
+                                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soapenv:Fault
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:cus="http://osb.training/customer">
+    
+    <faultcode>soapenv:Client</faultcode>
+    <faultstring>Customer not found</faultstring>
+    
+    <detail>
+        <cus:GetCustomerError>
+            <cus:Code>CUSTOMER_NOT_FOUND</cus:Code>
+            <cus:Message>
+                No customer exists with the provided CustomerId
+            </cus:Message>
+        </cus:GetCustomerError>
+    </detail>
+    
+</soapenv:Fault>]]></con2:xqueryText>
+                                                </con1:expr>
+                                            </con1:replace>
+                                            <con2:reply isError="true" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                                <con2:id>_ActionId-N3f57fedd.N435fd53d.0.1a0f2466e99.N7fda</con2:id>
+                                            </con2:reply>
+                                        </con1:actions>
+                                    </con1:case>
+                                    <con1:default/>
+                                </con1:ifThenElse>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default/>
+                    </con1:ifThenElse>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57fedb.505c4a89.0.1a0d3300238.N7f9d">
+            <con:stage id="_StageId-N3f57fedb.505c4a89.0.1a0d3300238.N7f91" name="ValidateRequest">
+                <con:context>
+                    <con1:userNsDecl prefix="cus" namespace="http://osb.training/customer" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:validate xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedb.505c4a89.0.1a0d3300238.N7f94</con2:id>
+                        <con1:schema ref="CustomerService/XSD/Request/CreateCustomerRequest"/>
+                        <con1:schemaElement xmlns:cus="http://osb.training/customer">cus:CreateCustomerRequest</con1:schemaElement>
+                        <con1:varName>body</con1:varName>
+                        <con1:location>
+                            <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">./cus:CreateCustomerRequest</con2:xpathText>
+                        </con1:location>
+                    </con1:validate>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fedb.505c4a89.0.1a0d3300238.N7f9b" name="CreateCustomerRequest">
+                <con:context>
+                    <con1:userNsDecl prefix="cus" namespace="http://osb.training/customer" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="CreateCustomer" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedb.505c4a89.0.1a0d3300238.N7f97</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/cus:CreateCustomerRequest</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fedb.505c4a89.0.1a0d3300238.N7f93" name="TransformToDBRequest">
+                <con:context>
+                    <con1:userNsDecl prefix="cus" namespace="http://osb.training/customer" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedb.505c4a89.0.1a0d3300238.N7f8e</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="CustomerService/XQuery/CreateCustomerRequest"/>
+                                <con2:param name="request">
+                                    <con2:path>$body/cus:CreateCustomerRequest</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57fedb.505c4a89.0.1a0d3300238.N7f9c">
+            <con:stage id="_StageId-N3f57fedb.505c4a89.0.1a0d3300238.N7f9a" name="TransformToSOAPResponse">
+                <con:context>
+                    <con1:userNsDecl prefix="cus" namespace="http://osb.training/customer" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:userNsDecl prefix="ns1" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/CreateCustomerDBAdapter" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedb.505c4a89.0.1a0d3300238.N7f16</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="CustomerService/XQuery/CreateCustomerResponse"/>
+                                <con2:param name="response">
+                                    <con2:path>$body/ns1:OutputParameters</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57fedd.5663754.0.1a0ecfb46d7.N7f8f">
+            <con:stage id="_StageId-N3f57fedd.5663754.0.1a0ecfb46d7.N7f8d" name="ValidateRequest">
+                <con:context>
+                    <con1:userNsDecl prefix="cus" namespace="http://osb.training/customer" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:validate xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedd.5663754.0.1a0ecfb46d7.N7f89</con2:id>
+                        <con1:schema ref="CustomerService/XSD/Request/GetCustomerRequest"/>
+                        <con1:schemaElement xmlns:cus="http://osb.training/customer">cus:GetCustomerRequest</con1:schemaElement>
+                        <con1:varName>body</con1:varName>
+                        <con1:location>
+                            <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">./cus:GetCustomerRequest</con2:xpathText>
+                        </con1:location>
+                    </con1:validate>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fedd.5663754.0.1a0ecfb46d7.N7f88" name="GetCustomerRequest">
+                <con:context>
+                    <con1:userNsDecl prefix="cus" namespace="http://osb.training/customer" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="GetCustomer" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedd.5663754.0.1a0ecfb46d7.N7f85</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/cus:GetCustomerRequest</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fedd.5663754.0.1a0ecfb46d7.N7f1e" name="TransformToDBRequest">
+                <con:context>
+                    <con1:userNsDecl prefix="cus" namespace="http://osb.training/customer" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedd.5663754.0.1a0ecfb46d7.N7f1a</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="CustomerService/XQuery/GetCustomerRequest"/>
+                                <con2:param name="GetCustomerRequest">
+                                    <con2:path>$body/cus:GetCustomerRequest</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57fedd.5663754.0.1a0ecfb46d7.N7f8e">
+            <con:stage id="_StageId-N3f57fedd.5663754.0.1a0ecfb46d7.N7f8c" name="TransformToSOAPResponse">
+                <con:context>
+                    <con1:userNsDecl prefix="cus" namespace="http://osb.training/customer" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:userNsDecl prefix="ns1" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/GetCustomerDBAdapter" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedd.5663754.0.1a0ecfb46d7.N7f0e</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="CustomerService/XQuery/GetCustomerResponse"/>
+                                <con2:param name="response">
+                                    <con2:path>$body/ns1:OutputParameters</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:branch-node type="operation" id="_FlowId-N3f57fedd.5663754.0.1a0ecfb46d7.N7fcb" name="CustomerService">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="CreateCustomer">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="CreateCustomer">
+                                <con:request>request-N3f57fedb.505c4a89.0.1a0d3300238.N7f9d</con:request>
+                                <con:response>response-N3f57fedb.505c4a89.0.1a0d3300238.N7f9c</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="InvokeCreateCustomer">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedb.505c4a89.0.1a0d3300238.N7f4f</con2:id>
+                                        <con1:service ref="CustomerService/BusinessService/CreateCustomerBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>CreateCustomerDBAdapter</con1:operation>
+                                        <con1:outboundTransform/>
+                                        <con1:responseTransform/>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="GetCustomer">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="GetCustomer">
+                                <con:request>request-N3f57fedd.5663754.0.1a0ecfb46d7.N7f8f</con:request>
+                                <con:response>response-N3f57fedd.5663754.0.1a0ecfb46d7.N7f8e</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="InvokeGetCustomer">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fedd.5663754.0.1a0ecfb46d7.N7f17</con2:id>
+                                        <con1:service ref="CustomerService/BusinessService/GetCustomerBusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>GetCustomerDBAdapter</con1:operation>
+                                        <con1:outboundTransform/>
+                                        <con1:responseTransform/>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

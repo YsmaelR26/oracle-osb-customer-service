@@ -1,0 +1,39 @@
+# JDeveloper generated files
+**/.data/
+**/classes/
+**/deploy/
+
+# Build output
+target/
+build/
+out/
+
+
+# JDeveloper user/workspace files
+*.jws
+*.jws.xml
+*.jpr.user
+*.jpx.user
+
+# IDE metadata
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*~
+
+# JDeveloper application-generated metadata
+.adf/
+src/
+
+# JDeveloper project/IDE metadata
+CustomerService/.settings/

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://osb.training/customer" xmlns:tns="http://osb.training/customer"
+            targetNamespace="http://osb.training/customer" elementFormDefault="qualified">
+  <xsd:include schemaLocation="../Common/CustomerType.xsd"/>
+  <xsd:element name="CreateCustomerRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="PrimaryCustomer" type="tns:CustomerType"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
