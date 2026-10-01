@@ -388,7 +388,7 @@ CustomerService/
 
 
 
-The service is currently under active development.
+The core CRUD service is complete.
 
 
 
@@ -400,17 +400,9 @@ Implemented:
 
 - [x] GetCustomer
 
+- [x] UpdateCustomer
+
+- [x] DeleteCustomer
 
 
-Planned:
-
-
-
-- [ ] UpdateCustomer
-
-- [ ] DeleteCustomer
-
-
-
-The goal is to complete a full CRUD customer service while demonstrating an end-to-end Oracle Service Bus integration architecture.
-
+The project implements a full CRUD customer service while demonstrating an end-to-end Oracle Service Bus integration architecture.
