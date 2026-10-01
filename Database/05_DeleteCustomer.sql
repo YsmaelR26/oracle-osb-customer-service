@@ -1,0 +1,16 @@
+-- Deletes an existing customer identified by CUSTOMER_ID.
+-- Raises CUSTOMER_NOT_FOUND when the requested customer does not exist.
+
+CREATE OR REPLACE PROCEDURE DELETE_CUSTOMER (
+    P_CUSTOMER_ID IN NUMBER
+)
+AS
+BEGIN
+    DELETE FROM CUSTOMER
+    WHERE CUSTOMER_ID = P_CUSTOMER_ID;
+
+    IF SQL%ROWCOUNT = 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'CUSTOMER_NOT_FOUND');
+    END IF;
+END;
+/

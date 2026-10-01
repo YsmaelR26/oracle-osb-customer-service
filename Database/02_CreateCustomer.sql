@@ -1,0 +1,23 @@
+-- Creates a new customer and returns the generated CUSTOMER_ID.
+
+CREATE OR REPLACE PROCEDURE CREATE_CUSTOMER (
+    P_FIRST_NAME  IN VARCHAR2,
+    P_LAST_NAME   IN VARCHAR2,
+    P_EMAIL       IN VARCHAR2,
+    P_CUSTOMER_ID OUT NUMBER
+)
+AS
+BEGIN
+    INSERT INTO CUSTOMER (
+        FIRST_NAME,
+        LAST_NAME,
+        EMAIL
+    )
+    VALUES (
+        P_FIRST_NAME,
+        P_LAST_NAME,
+        P_EMAIL
+    )
+    RETURNING CUSTOMER_ID INTO P_CUSTOMER_ID;
+END;
+/

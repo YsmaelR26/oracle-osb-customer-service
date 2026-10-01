@@ -1,0 +1,24 @@
+-- Updates an existing customer identified by CUSTOMER_ID.
+-- Raises CUSTOMER_NOT_FOUND when the requested customer does not exist.
+
+CREATE OR REPLACE PROCEDURE UPDATE_CUSTOMER (
+    P_CUSTOMER_ID IN NUMBER,
+    P_FIRST_NAME  IN VARCHAR2,
+    P_LAST_NAME   IN VARCHAR2,
+    P_EMAIL       IN VARCHAR2
+)
+AS
+BEGIN
+    UPDATE CUSTOMER
+    SET
+        FIRST_NAME = P_FIRST_NAME,
+        LAST_NAME  = P_LAST_NAME,
+        EMAIL      = P_EMAIL
+    WHERE
+        CUSTOMER_ID = P_CUSTOMER_ID;
+
+    IF SQL%ROWCOUNT = 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'CUSTOMER_NOT_FOUND');
+    END IF;
+END;
+/
