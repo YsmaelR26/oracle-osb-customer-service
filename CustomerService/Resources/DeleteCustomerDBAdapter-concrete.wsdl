@@ -1,0 +1,12 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/CustomerServiceApplication/CustomerService/DeleteCustomerDBAdapter" name="DeleteCustomerDBAdapter-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="DeleteCustomerDBAdapter.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/CustomerServiceApplication/CustomerService/DeleteCustomerDBAdapter"/>
+    <wsdl:binding name="DeleteCustomerDBAdapter_ptt-binding" type="del:DeleteCustomerDBAdapter_ptt" xmlns:del="http://xmlns.oracle.com/pcbpel/adapter/db/CustomerServiceApplication/CustomerService/DeleteCustomerDBAdapter">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="DeleteCustomerDBAdapter">
+            <soap:operation soapAction="DeleteCustomerDBAdapter"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

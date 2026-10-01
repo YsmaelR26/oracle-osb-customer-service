@@ -7,12 +7,12 @@ declare namespace ns1="http://osb.training/customer";
 declare namespace ns2="http://xmlns.oracle.com/pcbpel/adapter/db/sp/GetCustomerDBAdapter";
 (:: import schema at "../Resources/GetCustomerDBAdapter_sp.xsd" ::)
 
-declare variable $GetCustomerRequest as element() (:: schema-element(ns1:GetCustomerRequest) ::) external;
+declare variable $Request as element() (:: schema-element(ns1:GetCustomerRequest) ::) external;
 
-declare function local:transformGetCustomerRequest($GetCustomerRequest as element() (:: schema-element(ns1:GetCustomerRequest) ::)) as element() (:: schema-element(ns2:InputParameters) ::) {
+declare function local:transformGetCustomerRequest($Request as element() (:: schema-element(ns1:GetCustomerRequest) ::)) as element() (:: schema-element(ns2:InputParameters) ::) {
     <ns2:InputParameters>
-        <ns2:P_CUSTOMER_ID>{fn:data($GetCustomerRequest/ns1:CustomerId)}</ns2:P_CUSTOMER_ID>
+        <ns2:P_CUSTOMER_ID>{fn:data($Request/ns1:CustomerId)}</ns2:P_CUSTOMER_ID>
     </ns2:InputParameters>
 };
 
-local:transformGetCustomerRequest($GetCustomerRequest)
+local:transformGetCustomerRequest($Request)

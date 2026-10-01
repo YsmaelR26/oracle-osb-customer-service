@@ -1,0 +1,18 @@
+xquery version "1.0" encoding "utf-8";
+
+(:: OracleAnnotationVersion "1.0" ::)
+
+declare namespace ns1="http://osb.training/customer";
+(:: import schema at "../XSD/Request/DeleteCustomerRequest.xsd" ::)
+declare namespace ns2="http://xmlns.oracle.com/pcbpel/adapter/db/sp/DeleteCustomerDBAdapter";
+(:: import schema at "../Resources/DeleteCustomerDBAdapter_sp.xsd" ::)
+
+declare variable $Request as element() (:: schema-element(ns1:DeleteCustomerRequest) ::) external;
+
+declare function local:transformInputParameters($Request as element() (:: schema-element(ns1:DeleteCustomerRequest) ::)) as element() (:: schema-element(ns2:InputParameters) ::) {
+    <ns2:InputParameters>
+        <ns2:P_CUSTOMER_ID>{fn:data($Request/ns1:CustomerId)}</ns2:P_CUSTOMER_ID>
+    </ns2:InputParameters>
+};
+
+local:transformInputParameters($Request)

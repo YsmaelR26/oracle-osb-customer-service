@@ -3,9 +3,16 @@
             xmlns:tns="http://osb.training/customer" targetNamespace="http://osb.training/customer"
             elementFormDefault="qualified">
   <xsd:include schemaLocation="../Common/CustomerType.xsd"/>
-  <xsd:element name="CreateCustomerRequest">
+  <xsd:element name="UpdateCustomerRequest">
     <xsd:complexType>
       <xsd:sequence>
+        <xsd:element name="CustomerId">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:int">
+              <xsd:minInclusive value="1"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:element>
         <xsd:element name="PrimaryCustomer" type="tns:CustomerType"/>
       </xsd:sequence>
     </xsd:complexType>

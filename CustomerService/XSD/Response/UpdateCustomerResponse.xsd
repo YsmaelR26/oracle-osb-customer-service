@@ -2,11 +2,12 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://osb.training/customer"
             xmlns:tns="http://osb.training/customer" targetNamespace="http://osb.training/customer"
             elementFormDefault="qualified">
-  <xsd:include schemaLocation="../Common/CustomerType.xsd"/>
-  <xsd:element name="CreateCustomerRequest">
+  <xsd:include schemaLocation="../Common/CustomerResponseType.xsd"/>
+  <xsd:element name="UpdateCustomerResponse">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="PrimaryCustomer" type="tns:CustomerType"/>
+        <xsd:element name="CustomerId" type="xsd:int"/>
+        <xsd:element name="ResponseStatus" type="tns:ResponseStatusType"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>

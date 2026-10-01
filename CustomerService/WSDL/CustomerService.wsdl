@@ -1,7 +1,6 @@
 <?xml version= '1.0' encoding= 'UTF-8' ?>
 <wsdl:definitions name="CustomerService" targetNamespace="http://osb.training/customer"
-                  xmlns:tns="http://osb.training/customer" xmlns:inp1="http://osb.training/customer"
-                  xmlns:inp2="http://osb.training/customer" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://osb.training/customer" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
@@ -16,6 +15,18 @@
     <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
       <xsd:import namespace="http://osb.training/customer" schemaLocation="../XSD/Response/GetCustomerResponse.xsd"/>
     </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://osb.training/customer" schemaLocation="../XSD/Request/UpdateCustomerRequest.xsd"/>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://osb.training/customer" schemaLocation="../XSD/Response/UpdateCustomerResponse.xsd"/>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://osb.training/customer" schemaLocation="../XSD/Request/DeleteCustomerRequest.xsd"/>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://osb.training/customer" schemaLocation="../XSD/Response/DeleteCustomerResponse.xsd"/>
+    </xsd:schema>
   </wsdl:types>
   <wsdl:message name="CreateCustomerRequestMessage">
     <wsdl:part name="request" element="tns:CreateCustomerRequest"/>
@@ -29,6 +40,18 @@
   <wsdl:message name="GetCustomerResponseMessage">
     <wsdl:part name="response" element="tns:GetCustomerResponse"/>
   </wsdl:message>
+  <wsdl:message name="UpdateCustomerRequestMessage">
+    <wsdl:part name="request" element="tns:UpdateCustomerRequest"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateCustomerResponseMessage">
+    <wsdl:part name="response" element="tns:UpdateCustomerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteCustomerRequestMessage">
+    <wsdl:part name="request" element="tns:DeleteCustomerRequest"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteCustomerResponseMessage">
+    <wsdl:part name="response" element="tns:DeleteCustomerResponse"/>
+  </wsdl:message>
   <wsdl:portType name="CustomerServicePortType">
     <wsdl:operation name="CreateCustomer">
       <wsdl:input message="tns:CreateCustomerRequestMessage"/>
@@ -37,6 +60,14 @@
     <wsdl:operation name="GetCustomer">
       <wsdl:input message="tns:GetCustomerRequestMessage"/>
       <wsdl:output message="tns:GetCustomerResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCustomer">
+      <wsdl:input message="tns:UpdateCustomerRequestMessage"/>
+      <wsdl:output message="tns:UpdateCustomerResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCustomer">
+      <wsdl:input message="tns:DeleteCustomerRequestMessage"/>
+      <wsdl:output message="tns:DeleteCustomerResponseMessage"/>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="CustomerServiceBinding" type="tns:CustomerServicePortType">
@@ -52,6 +83,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetCustomer">
       <soap:operation style="document" soapAction="GetCustomer"/>
+      <wsdl:input>
+        <soap:body use="literal" namespace="http://osb.training/customer"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="http://osb.training/customer"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCustomer">
+      <soap:operation style="document" soapAction="UpdateCustomer"/>
+      <wsdl:input>
+        <soap:body use="literal" namespace="http://osb.training/customer"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" namespace="http://osb.training/customer"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCustomer">
+      <soap:operation style="document" soapAction="DeleteCustomer"/>
       <wsdl:input>
         <soap:body use="literal" namespace="http://osb.training/customer"/>
       </wsdl:input>

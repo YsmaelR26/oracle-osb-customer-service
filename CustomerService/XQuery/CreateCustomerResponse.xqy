@@ -9,7 +9,7 @@ declare namespace ns1="http://xmlns.oracle.com/pcbpel/adapter/db/sp/CreateCustom
 
 declare variable $response as element() (:: schema-element(ns1:OutputParameters) ::) external;
 
-declare function local:mapCreateCustomerResponse($response as element() (:: schema-element(ns1:OutputParameters) ::)) as element() (:: schema-element(ns2:CreateCustomerResponse) ::) {
+declare function local:transformCreateCustomerResponse($response as element() (:: schema-element(ns1:OutputParameters) ::)) as element() (:: schema-element(ns2:CreateCustomerResponse) ::) {
     <ns2:CreateCustomerResponse>
         <ns2:CustomerId>{fn:data($response/ns1:P_CUSTOMER_ID)}</ns2:CustomerId>
         <ns2:ResponseStatus>
@@ -19,4 +19,4 @@ declare function local:mapCreateCustomerResponse($response as element() (:: sche
     </ns2:CreateCustomerResponse>
 };
 
-local:mapCreateCustomerResponse($response)
+local:transformCreateCustomerResponse($response)
