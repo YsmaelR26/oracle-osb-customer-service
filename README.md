@@ -1,8 +1,8 @@
-\# Oracle Service Bus Customer Service
+# Oracle Service Bus Customer Service
 
 
 
-A SOAP-based customer management service built with \*\*Oracle Service Bus 12c\*\*, integrating with an \*\*Oracle Database\*\* through \*\*JCA Database Adapters\*\* and stored procedures.
+A SOAP-based customer management service built with **Oracle Service Bus 12c**, integrating with an **Oracle Database** through **JCA Database Adapters** and stored procedures.
 
 
 
@@ -10,39 +10,39 @@ The project demonstrates service orchestration, XML schema validation, XQuery tr
 
 
 
-\## Technologies
+## Technologies
 
 
 
-\- Oracle Service Bus 12c (12.2.1.4)
+- Oracle Service Bus 12c (12.2.1.4)
 
-\- Oracle WebLogic Server
+- Oracle WebLogic Server
 
-\- Oracle Database
+- Oracle Database
 
-\- JCA Database Adapter
+- JCA Database Adapter
 
-\- SOAP 1.1
+- SOAP 1.1
 
-\- WSDL
+- WSDL
 
-\- XSD
+- XSD
 
-\- XQuery
+- XQuery
 
-\- PL/SQL
+- PL/SQL
 
-\- Maven
+- Maven
 
-\- Git / GitHub
-
-
-
-\## Current Operations
+- Git / GitHub
 
 
 
-\### CreateCustomer
+## Current Operations
+
+
+
+### CreateCustomer
 
 
 
@@ -54,21 +54,21 @@ The operation:
 
 
 
-1\. Receives a SOAP request.
+1. Receives a SOAP request.
 
-2\. Validates the request against the service XSD.
+2. Validates the request against the service XSD.
 
-3\. Transforms the service request into the format required by the JCA Database Adapter.
+3. Transforms the service request into the format required by the JCA Database Adapter.
 
-4\. Invokes the `CREATE\_CUSTOMER` stored procedure.
+4. Invokes the `CREATE_CUSTOMER` stored procedure.
 
-5\. Transforms the database response into the public service response.
+5. Transforms the database response into the public service response.
 
-6\. Returns the generated customer ID and operation status.
+6. Returns the generated customer ID and operation status.
 
 
 
-\### GetCustomer
+### GetCustomer
 
 
 
@@ -80,19 +80,19 @@ The operation:
 
 
 
-1\. Receives and validates the customer ID.
+1. Receives and validates the customer ID.
 
-2\. Transforms the SOAP request into the database adapter request.
+2. Transforms the SOAP request into the database adapter request.
 
-3\. Invokes the `GET\_CUSTOMER` stored procedure.
+3. Invokes the `GET_CUSTOMER` stored procedure.
 
-4\. Transforms the database response into the service response.
+4. Transforms the database response into the service response.
 
-5\. Returns the customer ID, first name, last name, and email address.
+5. Returns the customer ID, first name, last name, and email address.
 
 
 
-\## Architecture
+## Architecture
 
 
 
@@ -156,7 +156,7 @@ Responses return through the pipeline where the database adapter output is trans
 
 
 
-\## Service Design
+## Service Design
 
 
 
@@ -186,7 +186,7 @@ The pipeline uses the OSB operation context to route each request through the ap
 
 
 
-\## XML Validation
+## XML Validation
 
 
 
@@ -234,7 +234,7 @@ This allows common customer structures and validation rules to be reused across 
 
 
 
-\## XQuery Transformations
+## XQuery Transformations
 
 
 
@@ -264,7 +264,7 @@ This allows the external service contract and internal database integration form
 
 
 
-\## Database Integration
+## Database Integration
 
 
 
@@ -278,9 +278,9 @@ Current stored procedures:
 
 ```sql
 
-CREATE\_CUSTOMER
+CREATE_CUSTOMER
 
-GET\_CUSTOMER
+GET_CUSTOMER
 
 ```
 
@@ -290,7 +290,7 @@ Each database operation uses its own adapter and Business Service, keeping datab
 
 
 
-\## Error Handling
+## Error Handling
 
 
 
@@ -306,15 +306,15 @@ Handled scenarios currently include:
 
 
 
-\- Invalid or missing customer data
+- Invalid or missing customer data
 
-\- Invalid customer IDs
+- Invalid customer IDs
 
-\- Duplicate customer email addresses
+- Duplicate customer email addresses
 
-\- Customer not found
+- Customer not found
 
-\- Unexpected service/database errors
+- Unexpected service/database errors
 
 
 
@@ -334,7 +334,7 @@ Example controlled SOAP fault:
 
 &#x20;       <cus:GetCustomerError>
 
-&#x20;           <cus:Code>CUSTOMER\_NOT\_FOUND</cus:Code>
+&#x20;           <cus:Code>CUSTOMER_NOT_FOUND</cus:Code>
 
 &#x20;           <cus:Message>
 
@@ -352,7 +352,7 @@ Example controlled SOAP fault:
 
 
 
-\## Project Structure
+## Project Structure
 
 
 
@@ -384,7 +384,7 @@ CustomerService/
 
 
 
-\## Development Status
+## Development Status
 
 
 
@@ -396,9 +396,9 @@ Implemented:
 
 
 
-\- \[x] CreateCustomer
+- [x] CreateCustomer
 
-\- \[x] GetCustomer
+- [x] GetCustomer
 
 
 
@@ -406,9 +406,9 @@ Planned:
 
 
 
-\- \[ ] UpdateCustomer
+- [ ] UpdateCustomer
 
-\- \[ ] DeleteCustomer
+- [ ] DeleteCustomer
 
 
 
